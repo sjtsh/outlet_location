@@ -27,14 +27,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Player player = Player(id: 1);
     player.open(
-      Media.file(File( r"D:\New folder\26_04_2021_13_31_53_PROJOM00718 - Copy (2).MP4")),
+      Media.file(File( r"C:\Users\ACER\Desktop\hello\04_20_2021 11_28_34\04_20_2021 11_28_34.MP4")),
     );
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: VideoPlayer(MediaJson(media: r"D:\New folder\26_04_2021_13_31_53_PROJOM00718 - Copy (2).MP4", json: r"D:\26_04_2021_13_31_53_PROJOM00718 - Copy (2).json"), player)
+        home: VideoPlayer(MediaJson(media: r"C:\Users\ACER\Desktop\hello\04_20_2021 11_28_34.MP4", json: r"C:\Users\ACER\Desktop\hello\04_20_2021 11_28_34.json"), player)
         // home: ChooseFile(),
     );
   }
