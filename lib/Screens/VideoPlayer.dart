@@ -8,8 +8,8 @@ import 'package:outlet_location/Entity/MediaJson.dart';
 import 'package:screenshot/screenshot.dart';
 
 class VideoPlayer extends StatefulWidget {
-  MediaJson mediaJson;
-  Player player;
+  final MediaJson mediaJson;
+  final Player player;
 
   VideoPlayer(this.mediaJson, this.player);
 
@@ -54,8 +54,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                   sController
                       .capture(delay: Duration(milliseconds: 10))
                       .then((capturedImage) async {
-                    ShowCapturedWidget(
-                        context, capturedImage!, widget.player);
+                    ShowCapturedWidget(context, File(""), widget.player);
                   }).catchError((onError) {
                     print(onError);
                   });
@@ -71,15 +70,25 @@ class _VideoPlayerState extends State<VideoPlayer> {
                     onTap: () {
                       widget.player.playOrPause();
                     },
-                    child: Screenshot(
-                      controller: sController,
-                      child: Container(
-                        color: Colors.white,
-                        child: Video(
-                          player: widget.player,
-                          scale: 1.0,
-                          // default
-                          showControls: false,
+                    child: Container(
+                      color: Colors.white,
+                      child: Screenshot(
+                        controller: sController,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Video(
+                                player: widget.player,
+                                scale: 1.0,
+                                // default
+                                showControls: false,
+                              ),
+                            ),
+                            Container(
+                              color: Colors.green,
+                              height: 60,
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -124,12 +133,22 @@ class _VideoPlayerState extends State<VideoPlayer> {
                           ),
                           ElevatedButton(
                             onPressed: () {
+                              File file =
+                                  File(r"C:\Users\Sajat\Desktop\hello.png");
                               widget.player.pause();
+                              widget.player.takeSnapshot(
+                                  file,
+                                  widget.player.videoDimensions.width,
+                                  widget.player.videoDimensions.height);
                               sController
                                   .capture(delay: Duration(milliseconds: 10))
                                   .then((capturedImage) async {
-                                ShowCapturedWidget(
-                                    context, capturedImage!, widget.player);
+                                if (capturedImage != null) {
+                                  ShowCapturedWidget(
+                                      context, file, widget.player);
+                                } else {
+                                  print("null value");
+                                }
                               }).catchError((onError) {
                                 print(onError);
                               });
@@ -151,7 +170,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
 }
 
 Future<dynamic> ShowCapturedWidget(
-    BuildContext context, Uint8List capturedImage, Player player) {
+    BuildContext context, File file, Player player) {
   return showDialog(
     useSafeArea: false,
     context: context,
@@ -160,28 +179,26 @@ Future<dynamic> ShowCapturedWidget(
         children: [
           Container(
             height: 50,
-            child: Expanded(
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        player.play();
-                      },
-                      icon: Icon(Icons.arrow_back)),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Text("Captured Screenshot")
-                ],
-              ),
+            child: Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      player.play();
+                    },
+                    icon: Icon(Icons.arrow_back)),
+                SizedBox(
+                  width: 12,
+                ),
+                Text("Captured Screenshot")
+              ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Center(
-                child: capturedImage != null
-                    ? Image.memory(capturedImage)
+                child: file != null
+                    ? Image.file(file)
                     : Container()),
           ),
           ElevatedButton(
