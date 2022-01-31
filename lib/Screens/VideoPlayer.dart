@@ -54,8 +54,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                   sController
                       .capture(delay: Duration(milliseconds: 10))
                       .then((capturedImage) async {
-                    ShowCapturedWidget(
-                        context, capturedImage!, widget.player);
+                    ShowCapturedWidget(context, capturedImage!, widget.player);
                   }).catchError((onError) {
                     print(onError);
                   });
@@ -86,7 +85,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                   ),
                 ),
                 Container(
-                  height: 100,
+                  height: 80,
                   child: Column(
                     children: [
                       StreamBuilder<Object>(
@@ -116,6 +115,19 @@ class _VideoPlayerState extends State<VideoPlayer> {
                       ),
                       Row(
                         children: [
+                          Expanded(child: Container()),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffcecece),
+                                shape: BoxShape.circle),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.pause,
+                                size: 16,
+                              ),
+                            ),
+                          ),
                           ElevatedButton(
                             onPressed: () {
                               widget.player.playOrPause();
@@ -136,6 +148,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                             },
                             child: const Text("Screenshot"),
                           ),
+                          Expanded(child: Container()),
                         ],
                       )
                     ],
@@ -159,7 +172,6 @@ Future<dynamic> ShowCapturedWidget(
       body: Column(
         children: [
           Container(
-            height: 50,
             child: Expanded(
               child: Row(
                 children: [
