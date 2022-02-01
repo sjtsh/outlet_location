@@ -31,7 +31,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    //int _counter = 0;
+    int _counter = 0;
     // Uint8List _imageFile;
     //
     // String fileName = "${DateTime.now().microsecondsSinceEpoch}${".png"}";
@@ -48,8 +48,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
             actions: {
               ScreenShotIntent: CallbackAction<ScreenShotIntent>(
                 onInvoke: (intent) {
-                  captureScreen(context, widget.player, sController);
-
+                  captureScreen(context, widget.player, sController,_counter);
+                  _counter++;
                   print("ss taken");
                 },
               )
@@ -155,7 +155,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
                             GestureDetector(
                               onTap: () {
                                 captureScreen(
-                                    context, widget.player, sController);
+                                    context, widget.player, sController,_counter);
+                                _counter++;
                               },
                               child: Container(
 
@@ -216,21 +217,19 @@ Future<dynamic> ShowCapturedWidget(
                      color: Colors.black.withOpacity(0.1))
                ]
            ),
-            child: Expanded(
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        player.play();
-                      },
-                      icon: const Icon(Icons.arrow_back)),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  const Text("Captured Screenshot")
-                ],
-              ),
+            child: Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      player.play();
+                    },
+                    icon: const Icon(Icons.arrow_back)),
+                const SizedBox(
+                  width: 12,
+                ),
+                const Text("Captured Screenshot")
+              ],
             ),
           ),
           Expanded(
@@ -285,22 +284,11 @@ Future<dynamic> ShowCapturedWidget(
 // }
 
 captureScreen(
-    context, Player player, ScreenshotController screenshotController) async {
-  File file = await File(r"C:\Users\ACER\Desktop\hello\hellojk.jpeg");
+    context, Player player, ScreenshotController screenshotController, int index) async {
+  File file = File("C:\\Users\\Sajat\\Desktop\\$index.jpeg");
   player.pause();
   player.takeSnapshot(
         file, player.videoDimensions.width, player.videoDimensions.height);
-  // screenshotController
-  //     .capture(delay: const Duration(milliseconds: 10))
-  //     .then((capturedImage) async {
-  //   if (capturedImage != null) {
-  //     ShowCapturedWidget(context, file, player);
-  //   } else {
-  //     print("null value");
-  //   }
-  // }).catchError((onError) {
-  //   print(onError);
-  // });
 
   ShowCapturedWidget(context, file, player);
 }
