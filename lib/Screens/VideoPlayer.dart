@@ -9,6 +9,8 @@ import 'package:outlet_location/provider/pausePlay.dart';
 import 'package:provider/src/provider.dart';
 import 'package:screenshot/screenshot.dart';
 
+import 'CapturedImageScreen.dart';
+
 class VideoPlayer extends StatefulWidget {
   final MediaJson mediaJson;
   final Player player;
@@ -36,7 +38,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
     //
     // String fileName = "${DateTime.now().microsecondsSinceEpoch}${".png"}";
     // String path = r'C:\Users\ACER\Desktop\hello';
-    ScreenshotController sController = ScreenshotController();
+  //  ScreenshotController sController = ScreenshotController();
     return Scaffold(
       backgroundColor: const Color(0xfff4f4f4),
       body: Center(
@@ -48,7 +50,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
             actions: {
               ScreenShotIntent: CallbackAction<ScreenShotIntent>(
                 onInvoke: (intent) {
-                  captureScreen(context, widget.player, sController);
+                  captureScreen(context, widget.player);
 
                   print("ss taken");
                 },
@@ -64,47 +66,44 @@ class _VideoPlayerState extends State<VideoPlayer> {
                     },
                     child: Container(
                       color: Colors.white,
-                      child: Screenshot(
-                        controller: sController,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: Video(
-                                player: widget.player,
-                                scale: 1.0,
-                                // default
-                                showControls: false,
-                              ),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Video(
+                              player: widget.player,
+                              scale: 1.0,
+                              // default
+                              showControls: false,
                             ),
-                            Container(
-                              child: StreamBuilder<Object>(
-                                stream: widget.player.positionStream,
-                                initialData: PositionState(),
-                                builder: (context, AsyncSnapshot snapshot) {
-                                  PositionState progress = snapshot.data;
-                                  return Builder(builder: (context) {
-                                    return Slider(
-                                      value: progress.position!.inSeconds + 0.0,
-                                      onChanged: (double value) {},
-                                      max: progress.duration!.inSeconds + 0.0,
-                                    );
-                                    // return Center(
-                                    //   child: Text(
-                                    //     (progress.position).toString().substring(3, 7) +
-                                    //         "/" +
-                                    //         (progress.duration).toString().substring(3, 7),
-                                    //     style: const TextStyle(
-                                    //       color: Colors.black,
-                                    //       fontSize: 50,
-                                    //     ),
-                                    //   ),
-                                    // );
-                                  });
-                                },
-                              ),
+                          ),
+                          Container(
+                            child: StreamBuilder<Object>(
+                              stream: widget.player.positionStream,
+                              initialData: PositionState(),
+                              builder: (context, AsyncSnapshot snapshot) {
+                                PositionState progress = snapshot.data;
+                                return Builder(builder: (context) {
+                                  return Slider(
+                                    value: progress.position!.inSeconds + 0.0,
+                                    onChanged: (double value) {},
+                                    max: progress.duration!.inSeconds + 0.0,
+                                  );
+                                  // return Center(
+                                  //   child: Text(
+                                  //     (progress.position).toString().substring(3, 7) +
+                                  //         "/" +
+                                  //         (progress.duration).toString().substring(3, 7),
+                                  //     style: const TextStyle(
+                                  //       color: Colors.black,
+                                  //       fontSize: 50,
+                                  //     ),
+                                  //   ),
+                                  // );
+                                });
+                              },
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -155,7 +154,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                             GestureDetector(
                               onTap: () {
                                 captureScreen(
-                                    context, widget.player, sController);
+                                    context, widget.player);
                               },
                               child: Container(
 
@@ -216,21 +215,19 @@ Future<dynamic> ShowCapturedWidget(
                      color: Colors.black.withOpacity(0.1))
                ]
            ),
-            child: Expanded(
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        player.play();
-                      },
-                      icon: const Icon(Icons.arrow_back)),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  const Text("Captured Screenshot")
-                ],
-              ),
+            child: Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      player.play();
+                    },
+                    icon: const Icon(Icons.arrow_back)),
+                const SizedBox(
+                  width: 12,
+                ),
+                const Text("Captured Screenshot")
+              ],
             ),
           ),
           Expanded(
@@ -241,8 +238,8 @@ Future<dynamic> ShowCapturedWidget(
                   flex: 6,
                   child: Container(
                     color: Colors.black,
-                    width: MediaQuery.of(context).size.width * 0.70,
-                     height: MediaQuery.of(context).size.height * 0.90,
+                    // width: MediaQuery.of(context).size.width * 0.70,
+                    //  height: MediaQuery.of(context).size.height * 0.90,
                     child: file != null ? Image.file(file) : Container(),
                   ),
                 ),
@@ -285,8 +282,8 @@ Future<dynamic> ShowCapturedWidget(
 // }
 
 captureScreen(
-    context, Player player, ScreenshotController screenshotController) async {
-  File file = await File(r"C:\Users\ACER\Desktop\hello\hellojk.jpeg");
+    context, Player player)  {
+  File file =  File(r"C:\Users\ACER\Desktop\hello\hellok.jpeg");
   player.pause();
   player.takeSnapshot(
         file, player.videoDimensions.width, player.videoDimensions.height);
@@ -302,7 +299,8 @@ captureScreen(
   //   print(onError);
   // });
 
-  ShowCapturedWidget(context, file, player);
+  //ShowCapturedWidget(context, file, player);
+  Navigator.of(context).push(MaterialPageRoute(builder: (_)=>CaputuredImageScreen(player,file)));
 }
 
 
