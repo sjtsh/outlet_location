@@ -33,12 +33,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    //int _counter = 0;
-    // Uint8List _imageFile;
-    //
-    // String fileName = "${DateTime.now().microsecondsSinceEpoch}${".png"}";
-    // String path = r'C:\Users\ACER\Desktop\hello';
-  //  ScreenshotController sController = ScreenshotController();
+    int _counter = 0;
     return Scaffold(
       backgroundColor: const Color(0xfff4f4f4),
       body: Center(
@@ -50,7 +45,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
             actions: {
               ScreenShotIntent: CallbackAction<ScreenShotIntent>(
                 onInvoke: (intent) {
-                  captureScreen(context, widget.player);
+                  captureScreen(context, widget.player, _counter);
+                  _counter++;
 
                   print("ss taken");
                 },
@@ -125,18 +121,16 @@ class _VideoPlayerState extends State<VideoPlayer> {
                               child: Container(
                                 height: 50,
                                 width: 50,
-                                decoration:  BoxDecoration(
-
+                                decoration: BoxDecoration(
                                     color: Colors.white,
                                     shape: BoxShape.circle,
-                                 boxShadow: [
-                                    BoxShadow(
-                                    offset: Offset(0,2),
-                                  blurRadius: 2,
-                                  spreadRadius: 2,
-                                  color: Colors.black.withOpacity(0.1))
-                                ]
-                                ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          offset: Offset(0, 2),
+                                          blurRadius: 2,
+                                          spreadRadius: 2,
+                                          color: Colors.black.withOpacity(0.1))
+                                    ]),
                                 child: Padding(
                                   padding: EdgeInsets.all(4.0),
                                   child: Icon(
@@ -147,17 +141,15 @@ class _VideoPlayerState extends State<VideoPlayer> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 12,
                             ),
-
                             GestureDetector(
                               onTap: () {
-                                captureScreen(
-                                    context, widget.player);
+                                captureScreen(context, widget.player, _counter);
+                                _counter++;
                               },
                               child: Container(
-
                                 height: 50,
                                 width: 50,
                                 decoration: BoxDecoration(
@@ -165,7 +157,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                                     borderRadius: BorderRadius.circular(20),
                                     boxShadow: [
                                       BoxShadow(
-                                          offset: Offset(0,2),
+                                          offset: Offset(0, 2),
                                           blurRadius: 2,
                                           spreadRadius: 2,
                                           color: Colors.black.withOpacity(0.1))
@@ -194,113 +186,12 @@ class _VideoPlayerState extends State<VideoPlayer> {
   }
 }
 
-Future<dynamic> ShowCapturedWidget(
-    BuildContext context, File file, Player player) {
-  return showDialog(
-    useSafeArea: false,
-    context: context,
-    builder: (context) => Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 60,
-           decoration: BoxDecoration(
-             color: Colors.white,
-               boxShadow: [
-                 BoxShadow(
-                     offset: Offset(0,2),
-                     blurRadius: 2,
-                     spreadRadius: 2,
-                     color: Colors.black.withOpacity(0.1))
-               ]
-           ),
-            child: Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      player.play();
-                    },
-                    icon: const Icon(Icons.arrow_back)),
-                const SizedBox(
-                  width: 12,
-                ),
-                const Text("Captured Screenshot")
-              ],
-            ),
-          ),
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 6,
-                  child: Container(
-                    color: Colors.black,
-                    // width: MediaQuery.of(context).size.width * 0.70,
-                    //  height: MediaQuery.of(context).size.height * 0.90,
-                    child: file != null ? Image.file(file) : Container(),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              hintText: "Number of outlets"),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          decoration: const InputDecoration(hintText: "Category"),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text("Add"),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
+captureScreen(context, Player player, int index) async {
+  File file = File("C:\\Users\\ACER\\Desktop\\hello\\$index.jpeg");
 
-// _saved(File image) async {
-//   // final result = await ImageGallerySaver.save(image.readAsBytesSync());
-//   print("File Saved to Gallery");
-// }
-
-captureScreen(
-    context, Player player)  {
-  File file =  File(r"C:\Users\ACER\Desktop\hello\hellok.jpeg");
   player.pause();
   player.takeSnapshot(
-        file, player.videoDimensions.width, player.videoDimensions.height);
-  // screenshotController
-  //     .capture(delay: const Duration(milliseconds: 10))
-  //     .then((capturedImage) async {
-  //   if (capturedImage != null) {
-  //     ShowCapturedWidget(context, file, player);
-  //   } else {
-  //     print("null value");
-  //   }
-  // }).catchError((onError) {
-  //   print(onError);
-  // });
-
-  //ShowCapturedWidget(context, file, player);
-  Navigator.of(context).push(MaterialPageRoute(builder: (_)=>CaputuredImageScreen(player,file)));
+      file, player.videoDimensions.width, player.videoDimensions.height);
+  Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => CaputuredImageScreen(player, file)));
 }
-
-
