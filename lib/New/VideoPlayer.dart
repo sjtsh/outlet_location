@@ -5,9 +5,9 @@ import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:outlet_location/Entity/MediaJson.dart';
+import 'package:outlet_location/PreviousScreens/HomeScreen/HomeScreen.dart';
 import 'package:outlet_location/provider/pausePlay.dart';
 import 'package:provider/src/provider.dart';
-import 'package:screenshot/screenshot.dart';
 
 import 'CapturedImageScreen.dart';
 
@@ -115,6 +115,36 @@ class _VideoPlayerState extends State<VideoPlayer> {
                             Expanded(child: Container()),
                             GestureDetector(
                               onTap: () {
+                                widget.player.seek(Duration(seconds: 50));
+                               print( widget.player.currentStream);
+
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          offset: Offset(0, 2),
+                                          blurRadius: 2,
+                                          spreadRadius: 2,
+                                          color: Colors.black.withOpacity(0.1))
+                                    ]),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.fast_rewind,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            GestureDetector(
+                              onTap: () {
                                 context.read<PausePlay>().playPauseVideo();
                                 widget.player.playOrPause();
                               },
@@ -194,4 +224,6 @@ captureScreen(context, Player player, int index) async {
       file, player.videoDimensions.width, player.videoDimensions.height);
   Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => CaputuredImageScreen(player, file)));
+  // Navigator.of(context).push(
+  //     MaterialPageRoute(builder: (_) => HomeScreen(file)));
 }

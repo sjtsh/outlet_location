@@ -7,7 +7,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_manager/flutter_file_manager.dart';
 import 'package:outlet_location/Entity/MediaJson.dart';
-import 'package:outlet_location/Screens/VideoPlayer.dart';
+import 'package:outlet_location/New/VideoPlayer.dart';
+
 
 class ChooseFile extends StatefulWidget {
   @override

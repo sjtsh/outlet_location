@@ -8,7 +8,7 @@ import 'package:outlet_location/provider/pausePlay.dart';
 import 'package:provider/provider.dart';
 
 import 'ChooseFile/choose_file.dart';
-import 'Screens/VideoPlayer.dart';
+import 'New/VideoPlayer.dart';
 
 void main() {
   DartVLC.initialize();
