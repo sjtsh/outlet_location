@@ -18,7 +18,7 @@ import '../../Database.dart';
 
 
 class HomeScreen extends StatefulWidget {
-  final files;
+  final File files;
 
   HomeScreen(this.files);
 
@@ -34,7 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isNextButtonDisabled = true;
   bool isBackButtonDisabled = true;
 
-  final SwiperController _swiperController = SwiperController();
   ScreenshotController screenshotController = ScreenshotController();
 
   _changeIndicator(int index) {
@@ -134,16 +133,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SliderCategory(_changeIndicator, _swiperController,
                         widget.files, clusturIndex, screenshotController),
-                   //  Footer(
-                   //      _swiperController,
-                   //      false,
-                   //      isNextButtonDisabled,
-                   //      isBackButtonDisabled,
-                   //      _enableBackButton,
-                   //      widget.files,
-                   //      changeClusturIndicator,
-                   //      changeClusturIndicatorBack,
-                   //      screenshotController),
+                    Footer(
+                        false,
+                        isNextButtonDisabled,
+                        isBackButtonDisabled,
+                        _enableBackButton,
+                        widget.files,
+                        changeClusturIndicator,
+                        changeClusturIndicatorBack,
+                        screenshotController),
                   ],
                 ),
               ),

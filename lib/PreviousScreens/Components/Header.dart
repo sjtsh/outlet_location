@@ -54,44 +54,44 @@ class Header extends StatelessWidget {
                   ),
                   child: MaterialButton(
                     onPressed: () async {
-                      var dirs, files;
-                      List dirsWithFiles = [];
-                      var fm = FileManager(root: Directory(accessiblePath!));
-                      dirs = await fm.dirsTree();
-                      for (var dir in dirs) {
-                        bool condition = false;
-                        files = await FileManager(root: Directory(dir.path))
-                            .filesTree(
-                          excludedPaths: [],
-                          extensions: ["png", "jpg"],
-                        );
-                        for (int i = 0; i < dir.path.split("\\").length; i++) {
-                          if (dir.path.split("\\")[i] == "Clustured Image") {
-                            condition = true;
-                          }
-                          if (dir.path.split("\\")[i] == "Others") {
-                            condition = true;
-                          }
-                          if (dir.path.split("\\")[i] == "Confused") {
-                            condition = true;
-                          }
-                        }
-                        if (files.length != 0) {
-                          if (condition) {
-                            dirsWithFiles.add(dir);
-                          }
-                        }
-                      }
-                      currentItem = "";
-                      currentIndex = 0;
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) {
-                      //       return DirectoryScreen(dirsWithFiles);
-                      //     },
-                      //   ),
-                      // );
+                      // var dirs, files;
+                      // List dirsWithFiles = [];
+                      // var fm = FileManager(root: Directory(accessiblePath!));
+                      // dirs = await fm.dirsTree();
+                      // for (var dir in dirs) {
+                      //   bool condition = false;
+                      //   files = await FileManager(root: Directory(dir.path))
+                      //       .filesTree(
+                      //     excludedPaths: [],
+                      //     extensions: ["png", "jpg"],
+                      //   );
+                      //   for (int i = 0; i < dir.path.split("\\").length; i++) {
+                      //     if (dir.path.split("\\")[i] == "Clustured Image") {
+                      //       condition = true;
+                      //     }
+                      //     if (dir.path.split("\\")[i] == "Others") {
+                      //       condition = true;
+                      //     }
+                      //     if (dir.path.split("\\")[i] == "Confused") {
+                      //       condition = true;
+                      //     }
+                      //   }
+                      //   if (files.length != 0) {
+                      //     if (condition) {
+                      //       dirsWithFiles.add(dir);
+                      //     }
+                      //   }
+                      // }
+                      // currentItem = "";
+                      // currentIndex = 0;
+                      // // Navigator.push(
+                      // //   context,
+                      // //   MaterialPageRoute(
+                      // //     builder: (context) {
+                      // //       return DirectoryScreen(dirsWithFiles);
+                      // //     },
+                      // //   ),
+                      // // );
                     },
                     child: Text(
                       "Folder Path",
@@ -115,10 +115,10 @@ class Header extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Text(
-                      accessibleFilePath!
+                      files.path
                           .split("\\")
-                          .sublist(accessiblePath!.split("\\").length - 1,
-                              accessibleFilePath!.split("\\").length)
+                          .sublist(files.path.split("\\").length - 1,
+                          files.path.split("\\").length)
                           .join("\\"),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

@@ -217,7 +217,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
 }
 
 captureScreen(context, Player player, int index) async {
-  File file = File("C:\\Users\\ACER\\Desktop\\hello\\$index.jpeg");
+  File file = File("C:\\Users\\Sajat\\Desktop\\$index.jpeg");
 
   player.pause();
   player.takeSnapshot(

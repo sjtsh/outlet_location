@@ -10,15 +10,11 @@ import 'package:screenshot/screenshot.dart';
 
 import '../../Database.dart';
 
-
-
-List sliderPersonalFiles = [];
-
 class SliderCategory extends StatelessWidget {
   static final riKey1 = const Key('__RIKEY1__');
   final Function _changeIndicator;
   final SwiperController _swiperController;
-  final files;
+  final File files;
   final int clusturIndex;
   final ScreenshotController screenshotController;
 
@@ -27,45 +23,32 @@ class SliderCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    sliderPersonalFiles = files;
+
+    File sliderPersonalFiles = files;
     return Expanded(
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Screenshot(
             controller: screenshotController,
-            child: Swiper(
-              itemBuilder: (BuildContext context, int index) {
-                return FlutterSimpleStickerView(
-                  Image.file(
-                    File(
-                      sliderPersonalFiles[currentIndex].path,
-                    ),
-                    fit: BoxFit.contain,
-                  ),
-                  [
-                    Image.asset("icons/black.png"),
-                    Image.asset("icons/blue.png"),
-                    Image.asset("icons/green.png"),
-                    Image.asset("icons/red.png"),
-                  ],
-                  stickerSize: 100,
-                  panelHeight: 70,
-                  panelBackgroundColor: Colors.transparent,
-                  panelStickerAspectRatio: 4,
-                  panelStickerBackgroundColor: Colors.transparent,
-                );
-              },
-              itemCount: files.length,
-              viewportFraction: 1,
-              scale: 1,
-              onIndexChanged: (int index) {
-                currentIndex = index;
-                _changeIndicator(index);
-              },
-              loop: false,
-              physics: NeverScrollableScrollPhysics(),
-              controller: _swiperController,
+            child: FlutterSimpleStickerView(
+              Image.file(
+                File(
+                  sliderPersonalFiles.path,
+                ),
+                fit: BoxFit.contain,
+              ),
+              [
+                Image.asset("icons/black.png"),
+                Image.asset("icons/blue.png"),
+                Image.asset("icons/green.png"),
+                Image.asset("icons/red.png"),
+              ],
+              stickerSize: 100,
+              panelHeight: 70,
+              panelBackgroundColor: Colors.transparent,
+              panelStickerAspectRatio: 4,
+              panelStickerBackgroundColor: Colors.transparent,
             ),
           ),
           Positioned(

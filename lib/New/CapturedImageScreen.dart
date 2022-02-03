@@ -56,21 +56,19 @@ class _CaputuredImageScreenState extends State<CaputuredImageScreen> {
                     spreadRadius: 2,
                     color: Colors.black.withOpacity(0.1))
               ]),
-              child: Expanded(
-                child: Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          widget.player.play();
-                        },
-                        icon: const Icon(Icons.arrow_back)),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    const Text("Captured Screen")
-                  ],
-                ),
+              child: Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        widget.player.play();
+                      },
+                      icon: const Icon(Icons.arrow_back)),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  const Text("Captured Screen")
+                ],
               ),
             ),
             Row(

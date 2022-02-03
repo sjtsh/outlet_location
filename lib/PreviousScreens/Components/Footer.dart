@@ -13,7 +13,6 @@ import '../../Database.dart';
 import 'DialogBox.dart';
 
 class Footer extends StatefulWidget {
-  final SwiperController _swiperController;
   final bool isChangeButtonDisabled;
   final bool isNextButtonDisabled;
   final bool isBackButtonDisabled;
@@ -26,7 +25,6 @@ class Footer extends StatefulWidget {
   final LogStorage logStorage = LogStorage(accessibleFilePath!);
 
   Footer(
-      this._swiperController,
       this.isChangeButtonDisabled,
       this.isNextButtonDisabled,
       this.isBackButtonDisabled,
@@ -91,9 +89,9 @@ class _FooterState extends State<Footer> {
                 child: MaterialButton(
                   onPressed: () {
                     if (!widget.isNextButtonDisabled) {
-                      if (currentIndex == widget.files.length  &&
+                      if (
                           currentClusterCount == clusturCount ) {
-                        fileToCategory(widget.files, widget._swiperController,
+                        fileToCategory(widget.files,
                             widget.screenshotController);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -105,7 +103,7 @@ class _FooterState extends State<Footer> {
                         LogStorage logStorage = LogStorage(accessibleFilePath!);
                         logStorage.addLog("COMPLETED");
                       } else {
-                        fileToCategory(widget.files, widget._swiperController,
+                        fileToCategory(widget.files,
                             widget.screenshotController);
                         widget.changeClusturIndicator();
                         changeOutSelected("");
