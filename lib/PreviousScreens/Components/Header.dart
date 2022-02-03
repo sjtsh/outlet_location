@@ -115,11 +115,12 @@ class Header extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Text(
-                      accessibleFilePath!
-                          .split("\\")
-                          .sublist(accessiblePath!.split("\\").length - 1,
-                              accessibleFilePath!.split("\\").length)
-                          .join("\\"),
+                      // accessibleFilePath!
+                      //     .split("\\")
+                      //     .sublist(accessiblePath!.split("\\").length - 1,
+                      //         accessibleFilePath!.split("\\").length)
+                      //     .join("\\"),
+                      "here it is",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: Colors.black,

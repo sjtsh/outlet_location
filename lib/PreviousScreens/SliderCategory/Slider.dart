@@ -18,7 +18,7 @@ class SliderCategory extends StatelessWidget {
   static final riKey1 = const Key('__RIKEY1__');
   final Function _changeIndicator;
   final SwiperController _swiperController;
-  final files;
+  final File files;
   final int clusturIndex;
   final ScreenshotController screenshotController;
 
@@ -27,7 +27,7 @@ class SliderCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    sliderPersonalFiles = files;
+    sliderPersonalFiles = [files];
     return Expanded(
       child: Stack(
         alignment: Alignment.bottomCenter,
@@ -56,7 +56,7 @@ class SliderCategory extends StatelessWidget {
                   panelStickerBackgroundColor: Colors.transparent,
                 );
               },
-              itemCount: files.length,
+              itemCount: sliderPersonalFiles.length,
               viewportFraction: 1,
               scale: 1,
               onIndexChanged: (int index) {
