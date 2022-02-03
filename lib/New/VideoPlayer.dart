@@ -23,6 +23,8 @@ class VideoPlayer extends StatefulWidget {
 
 class ScreenShotIntent extends Intent {}
 
+PositionState progress = PositionState();
+
 class _VideoPlayerState extends State<VideoPlayer> {
   @override
   void initState() {
@@ -72,32 +74,65 @@ class _VideoPlayerState extends State<VideoPlayer> {
                               showControls: false,
                             ),
                           ),
-                          Container(
-                            child: StreamBuilder<Object>(
-                              stream: widget.player.positionStream,
-                              initialData: PositionState(),
-                              builder: (context, AsyncSnapshot snapshot) {
-                                PositionState progress = snapshot.data;
-                                return Builder(builder: (context) {
-                                  return Slider(
-                                    value: progress.position!.inSeconds + 0.0,
-                                    onChanged: (double value) {},
-                                    max: progress.duration!.inSeconds + 0.0,
-                                  );
-                                  // return Center(
-                                  //   child: Text(
-                                  //     (progress.position).toString().substring(3, 7) +
-                                  //         "/" +
-                                  //         (progress.duration).toString().substring(3, 7),
-                                  //     style: const TextStyle(
-                                  //       color: Colors.black,
-                                  //       fontSize: 50,
-                                  //     ),
-                                  //   ),
-                                  // );
-                                });
-                              },
-                            ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: StreamBuilder<Object>(
+                                  stream: widget.player.positionStream,
+                                  initialData: PositionState(),
+                                  builder: (context, AsyncSnapshot snapshot) {
+                                    PositionState progress = snapshot.data;
+                                    return Builder(builder: (context) {
+                                      return Slider(
+                                        value:
+                                            progress.position!.inSeconds + 0.0,
+                                        onChanged: (double value) {},
+                                        max: progress.duration!.inSeconds + 0.0,
+                                      );
+                                      // return Center(
+                                      //   child: Text(
+                                      //     (progress.position).toString().substring(3, 7) +
+                                      //         "/" +
+                                      //         (progress.duration).toString().substring(3, 7),
+                                      //     style: const TextStyle(
+                                      //       color: Colors.black,
+                                      //       fontSize: 50,
+                                      //     ),
+                                      //   ),
+                                      // );
+                                    });
+                                  },
+                                ),
+                              ),
+                              StreamBuilder<Object>(
+                                stream: widget.player.positionStream,
+                                initialData: PositionState(),
+                                builder: (context, AsyncSnapshot snapshot) {
+                                  progress = snapshot.data;
+                                  return Builder(builder: (context) {
+                                    //print((progress.duration)! - Duration( seconds: 15),
+                                    // rewindVideo(progress, widget.player);
+
+                                    return Center(
+                                      child: Text(
+                                        (progress.position)
+                                                .toString()
+                                                .substring(3, 7) +
+                                            "/" +
+                                            (progress.duration)
+                                                .toString()
+                                                .substring(0, 7),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                },
+                              ),
+                              SizedBox(width:12)
+                            ],
                           ),
                         ],
                       ),
@@ -115,9 +150,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                             Expanded(child: Container()),
                             GestureDetector(
                               onTap: () {
-                                widget.player.seek(Duration(seconds: 50));
-                               print( widget.player.currentStream);
-
+                                rewindVideo(progress, widget.player);
                               },
                               child: Container(
                                 height: 50,
@@ -132,12 +165,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                                           spreadRadius: 2,
                                           color: Colors.black.withOpacity(0.1))
                                     ]),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.fast_rewind,
-                                  ),
-                                ),
+                                child:  Icon(Icons.fast_rewind),
                               ),
                             ),
                             const SizedBox(
@@ -217,7 +245,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
 }
 
 captureScreen(context, Player player, int index) async {
-  File file = File("C:\\Users\\Sajat\\Desktop\\$index.jpeg");
+  File file = File("C:\\Users\\ACER\\Desktop\\hello$index.jpeg");
 
   player.pause();
   player.takeSnapshot(
@@ -226,4 +254,8 @@ captureScreen(context, Player player, int index) async {
       MaterialPageRoute(builder: (_) => CaputuredImageScreen(player, file)));
   // Navigator.of(context).push(
   //     MaterialPageRoute(builder: (_) => HomeScreen(file)));
+}
+
+rewindVideo(PositionState progress, Player player) {
+  player.seek((progress.position)! - Duration(seconds: 15));
 }

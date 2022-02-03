@@ -13,12 +13,10 @@ import 'package:screenshot/screenshot.dart';
 import '../../Database.dart';
 
 
-fileToCategory(File files, SwiperController _swiperController,
+fileToCategory(File files,
     ScreenshotController screenshotController) async {
   String directoryPath = accessibleFilePath!
-          .split("\\")
-          .sublist(0, accessibleFilePath!.split("\\").length - 2)
-          .join("\\") +
+           +
       '\\$currentItem';
   String toSave = directoryPath +
       '\\' +
@@ -47,11 +45,11 @@ fileToCategory(File files, SwiperController _swiperController,
   print(
       "$currentItem image from index $currentIndex of folder ${accessibleFilePath!.split("\\").sublist(accessiblePath!.split("\\").length - 1, accessibleFilePath!.split("\\").length).join("\\")} has been saved to" +
           toSave);
-  searchExcelData(toSave.split("\\").last, _swiperController, files);
+  searchExcelData(toSave.split("\\").last, files);
 }
 
 searchExcelData(
-    String nameOfImage, SwiperController _swiperController, File files) {
+    String nameOfImage, File files) {
   writeExcelData(
       nameOfImage, nameOfImage.split("_")[nameOfImage.split("_").length - 2]);
 }

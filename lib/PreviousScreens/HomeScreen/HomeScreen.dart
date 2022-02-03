@@ -19,8 +19,9 @@ import '../../Database.dart';
 
 class HomeScreen extends StatefulWidget {
   final File files;
+  final String outletsNumberInImage;
 
-  HomeScreen(this.files);
+  HomeScreen(this.files, this.outletsNumberInImage);
 
   //this will be the index that will be changed along with the slider and changes the index in the header
   @override
@@ -30,6 +31,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int  index = 0;
   int clusturIndex = 0;
+
 
   bool isNextButtonDisabled = true;
   bool isBackButtonDisabled = true;
@@ -74,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 refresh,
               ),
         );
-        _swiperController.next(animation: true);
       } else {
         currentClusterCount += 1;
         clusturIndex = currentClusterCount;
@@ -111,6 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    int outletsNumberInImage = int.parse(widget.outletsNumberInImage);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Row(
@@ -126,18 +129,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       height: 50,
                       child: Text(
-                        "Category ${currentClusterCount + 1} of $clusturCount",
+                        "Category ${currentClusterCount + 1} of ${outletsNumberInImage}",
 
                         style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SliderCategory(_changeIndicator, _swiperController,
+                    SliderCategory(_changeIndicator,
                         widget.files, clusturIndex, screenshotController),
                     Footer(
-<<<<<<< HEAD
-=======
-                        _swiperController,
->>>>>>> f863f6648d8f228269429c87e2edde90ab7a2895
                         false,
                         isNextButtonDisabled,
                         isBackButtonDisabled,
@@ -145,7 +144,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         widget.files,
                         changeClusturIndicator,
                         changeClusturIndicatorBack,
-                        screenshotController),
+                        screenshotController,
+                        outletsNumberInImage
+                    ),
                   ],
                 ),
               ),

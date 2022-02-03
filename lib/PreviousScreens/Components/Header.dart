@@ -24,7 +24,7 @@ class Header extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              "Image Preview ${1 + 1} of ${1}",
+              "Image Preview ${1} of ${1}",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
@@ -115,20 +115,13 @@ class Header extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Text(
-<<<<<<< HEAD
+
                       files.path
                           .split("\\")
                           .sublist(files.path.split("\\").length - 1,
                           files.path.split("\\").length)
                           .join("\\"),
-=======
-                      // accessibleFilePath!
-                      //     .split("\\")
-                      //     .sublist(accessiblePath!.split("\\").length - 1,
-                      //         accessibleFilePath!.split("\\").length)
-                      //     .join("\\"),
-                      "here it is",
->>>>>>> f863f6648d8f228269429c87e2edde90ab7a2895
+
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: Colors.black,

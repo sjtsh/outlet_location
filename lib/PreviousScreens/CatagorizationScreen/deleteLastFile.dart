@@ -9,7 +9,7 @@ import '../../Database.dart';
 
 
 
-deleteLastFile(File files, SwiperController _swiperController) async {
+deleteLastFile(File files,) async {
   var bytes = File(accessibleExcelPath!).readAsBytesSync();
   var excel = Excel.decodeBytes(bytes);
   Sheet sheetObject = excel['Clustured'];

@@ -21,8 +21,10 @@ class Footer extends StatefulWidget {
   final Function changeClusturIndicator;
   final Function changeClusturIndicatorBack;
   final ScreenshotController screenshotController;
+  final int outletsNumberInImage;
 
-  final LogStorage logStorage = LogStorage(accessibleFilePath!);
+
+ // final LogStorage logStorage = LogStorage(accessibleFilePath!);
 
   Footer(
       this.isChangeButtonDisabled,
@@ -32,7 +34,7 @@ class Footer extends StatefulWidget {
       this.files,
       this.changeClusturIndicator,
       this.changeClusturIndicatorBack,
-      this.screenshotController);
+      this.screenshotController, this.outletsNumberInImage);
 
   @override
   _FooterState createState() => _FooterState();
@@ -56,7 +58,7 @@ class _FooterState extends State<Footer> {
                 child: MaterialButton(
                   onPressed: () {
                     if (!widget.isBackButtonDisabled) {
-                      deleteLastFile(widget.files, widget._swiperController);
+                      deleteLastFile(widget.files,);
                       LogStorage logStorage = LogStorage(accessibleFilePath!);
                       logStorage.addLog("WENT BACK");
                       changeOutSelected("");
@@ -65,7 +67,7 @@ class _FooterState extends State<Footer> {
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Icon(
                         Icons.arrow_back_ios,
                         color: Colors.white,
@@ -89,23 +91,22 @@ class _FooterState extends State<Footer> {
                 child: MaterialButton(
                   onPressed: () {
                     if (!widget.isNextButtonDisabled) {
-<<<<<<< HEAD
-                      if (
-=======
+
                       if (currentIndex == 1  &&
->>>>>>> f863f6648d8f228269429c87e2edde90ab7a2895
-                          currentClusterCount == clusturCount ) {
+                          currentClusterCount == widget.outletsNumberInImage  ) {
                         fileToCategory(widget.files,
                             widget.screenshotController);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             content: Text(
                               "Congratulations!! directory has been completed",
                             ),
                           ),
                         );
-                        LogStorage logStorage = LogStorage(accessibleFilePath!);
+                       LogStorage logStorage = LogStorage(accessibleFilePath!);
                         logStorage.addLog("COMPLETED");
+                        currentClusterCount ++ ;
+                        print("Navigate to video player");
                       } else {
                         fileToCategory(widget.files,
                             widget.screenshotController);

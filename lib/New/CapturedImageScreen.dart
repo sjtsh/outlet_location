@@ -105,8 +105,9 @@ class _CaputuredImageScreenState extends State<CaputuredImageScreen> {
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            print(outletsNumberController.text);
-                            Navigator.of(context).push(MaterialPageRoute(builder: (_)=>HomeScreen(widget.file) ));
+                            String oultets = outletsNumberController.text;
+
+                            Navigator.of(context).push(MaterialPageRoute(builder: (_)=>HomeScreen(widget.file, oultets) ));
                           }
                         },
                         child: const Text("Next"),
