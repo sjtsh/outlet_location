@@ -23,14 +23,19 @@ class SliderCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
 
     File sliderPersonalFiles = files;
+=======
+    sliderPersonalFiles = [files];
+>>>>>>> f863f6648d8f228269429c87e2edde90ab7a2895
     return Expanded(
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Screenshot(
             controller: screenshotController,
+<<<<<<< HEAD
             child: FlutterSimpleStickerView(
               Image.file(
                 File(
@@ -49,6 +54,40 @@ class SliderCategory extends StatelessWidget {
               panelBackgroundColor: Colors.transparent,
               panelStickerAspectRatio: 4,
               panelStickerBackgroundColor: Colors.transparent,
+=======
+            child: Swiper(
+              itemBuilder: (BuildContext context, int index) {
+                return FlutterSimpleStickerView(
+                  Image.file(
+                    File(
+                      sliderPersonalFiles[currentIndex].path,
+                    ),
+                    fit: BoxFit.contain,
+                  ),
+                  [
+                    Image.asset("icons/black.png"),
+                    Image.asset("icons/blue.png"),
+                    Image.asset("icons/green.png"),
+                    Image.asset("icons/red.png"),
+                  ],
+                  stickerSize: 100,
+                  panelHeight: 70,
+                  panelBackgroundColor: Colors.transparent,
+                  panelStickerAspectRatio: 4,
+                  panelStickerBackgroundColor: Colors.transparent,
+                );
+              },
+              itemCount: sliderPersonalFiles.length,
+              viewportFraction: 1,
+              scale: 1,
+              onIndexChanged: (int index) {
+                currentIndex = index;
+                _changeIndicator(index);
+              },
+              loop: false,
+              physics: NeverScrollableScrollPhysics(),
+              controller: _swiperController,
+>>>>>>> f863f6648d8f228269429c87e2edde90ab7a2895
             ),
           ),
           Positioned(

@@ -89,7 +89,11 @@ class _FooterState extends State<Footer> {
                 child: MaterialButton(
                   onPressed: () {
                     if (!widget.isNextButtonDisabled) {
+<<<<<<< HEAD
                       if (
+=======
+                      if (currentIndex == 1  &&
+>>>>>>> f863f6648d8f228269429c87e2edde90ab7a2895
                           currentClusterCount == clusturCount ) {
                         fileToCategory(widget.files,
                             widget.screenshotController);

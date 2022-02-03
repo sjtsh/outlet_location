@@ -134,6 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     SliderCategory(_changeIndicator, _swiperController,
                         widget.files, clusturIndex, screenshotController),
                     Footer(
+<<<<<<< HEAD
+=======
+                        _swiperController,
+>>>>>>> f863f6648d8f228269429c87e2edde90ab7a2895
                         false,
                         isNextButtonDisabled,
                         isBackButtonDisabled,
