@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:outlet_location/Entity/MediaJson.dart';
 import 'package:outlet_location/provider/getJson.dart';
 import 'package:outlet_location/provider/pausePlay.dart';
@@ -29,12 +30,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     Player player = Player(id: 1);
     player.open(
       Media.file(File(r"C:\Users\ACER\Desktop\hello\04_20_2021 11_28_34\04_20_2021 11_28_34.MP4")),
     );
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+
+
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

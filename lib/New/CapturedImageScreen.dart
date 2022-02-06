@@ -93,6 +93,7 @@ class _CaputuredImageScreenState extends State<CaputuredImageScreen> {
                         padding: const EdgeInsets.all(12.0),
                         child: TextFormField(
                           controller: outletsNumberController,
+                          
                           decoration: const InputDecoration(
                               hintText: "Number of outlets"),
                           validator: (String? value) {

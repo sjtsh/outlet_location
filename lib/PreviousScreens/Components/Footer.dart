@@ -105,7 +105,6 @@ class _FooterState extends State<Footer> {
                         );
                        LogStorage logStorage = LogStorage(accessibleFilePath!);
                         logStorage.addLog("COMPLETED");
-                        currentClusterCount ++ ;
                         print("Navigate to video player");
                       } else {
                         fileToCategory(widget.files,
