@@ -7,6 +7,7 @@ import 'package:outlet_location/provider/getJson.dart';
 import 'package:outlet_location/provider/pausePlay.dart';
 import 'package:provider/provider.dart';
 
+import 'ChooseFile/ChooseFile.dart';
 import 'ChooseFile/choose_file.dart';
 import 'Screens/VideoPlayer.dart';
 
@@ -31,15 +32,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Player player = Player(id: 1);
     player.open(
-      Media.file(File( r"C:\Users\ACER\Desktop\test\L\04_20_2021 11_52_12\04_20_2021 11_52_12.MP4")),
+      Media.file(File( r"C:\Users\Dell\Desktop\Moviess\NeverthelessE06.MP4")),
     );
+    //VideoPlayer(MediaJson(media: r"C:\Users\Dell\Desktop\Moviess\22d_1625761945.22.9_265142.MP4", json: r"C:\Users\Dell\Desktop\Moviess\22d_1625761945.22.9_265142.json"), player)
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: VideoPlayer(MediaJson(media: r"C:\Users\ACER\Desktop\test\L\04_20_2021 11_52_12\04_20_2021 11_52_12.MP4", json: r"C:\Users\ACER\Desktop\test\L\04_20_2021 11_52_12\04_20_2021 11_52_12.json"), player)
+        // home:ChooseFolder(),
         // home: ChooseFile(),
+      home: VideoPlayer(MediaJson(media: r"C:\Users\Dell\Desktop\Moviess\NeverthelessE06.MP4", json: r"C:\Users\Dell\Desktop\Moviess\NeverthelessE06.json"), player),
     );
   }
 }

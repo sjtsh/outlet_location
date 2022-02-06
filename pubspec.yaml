@@ -36,6 +36,8 @@ dependencies:
   dotted_border:
   flutter_file_manager:
   screenshot: ^1.2.3
+  excel: ^1.1.5
+  filesystem_picker: ^2.0.0-nullsafety.0
 
 
   # The following adds the Cupertino Icons font to your application.

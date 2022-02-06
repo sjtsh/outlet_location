@@ -9,12 +9,12 @@ import 'package:flutter_file_manager/flutter_file_manager.dart';
 import 'package:outlet_location/Entity/MediaJson.dart';
 import 'package:outlet_location/Screens/VideoPlayer.dart';
 
-class ChooseFile extends StatefulWidget {
+class ChooseFile1 extends StatefulWidget {
   @override
-  State<ChooseFile> createState() => _ChooseFileState();
+  State<ChooseFile1> createState() => _ChooseFile1State();
 }
 
-class _ChooseFileState extends State<ChooseFile> {
+class _ChooseFile1State extends State<ChooseFile1> {
   List<MediaJson> mediaJsons = [];
 
   @override
