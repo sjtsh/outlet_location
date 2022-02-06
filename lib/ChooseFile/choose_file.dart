@@ -6,8 +6,10 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_manager/flutter_file_manager.dart';
+import 'package:outlet_location/Components/colors.dart';
 import 'package:outlet_location/Entity/MediaJson.dart';
-import 'package:outlet_location/Screens/VideoPlayer.dart';
+import 'package:outlet_location/New/VideoPlayer.dart';
+
 
 class ChooseFile1 extends StatefulWidget {
   @override
@@ -20,7 +22,7 @@ class _ChooseFile1State extends State<ChooseFile1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff4f4f4),
+      backgroundColor: AppColor.bgColor0,
       body: Column(
         children: [
           Column(

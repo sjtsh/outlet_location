@@ -36,8 +36,10 @@ dependencies:
   dotted_border:
   flutter_file_manager:
   screenshot: ^1.2.3
-  excel: ^1.1.5
+  flutter_swiper_null_safety:
   filesystem_picker: ^2.0.0-nullsafety.0
+  excel: ^1.1.5
+  flutter_simple_sticker_view:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -47,6 +49,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -67,7 +70,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+
+  assets:
+    - icons/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

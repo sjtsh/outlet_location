@@ -5,9 +5,9 @@ import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:outlet_location/Entity/MediaJson.dart';
+import 'package:outlet_location/PreviousScreens/HomeScreen/HomeScreen.dart';
 import 'package:outlet_location/provider/pausePlay.dart';
 import 'package:provider/src/provider.dart';
-import 'package:screenshot/screenshot.dart';
 
 import 'CapturedImageScreen.dart';
 
@@ -22,6 +22,8 @@ class VideoPlayer extends StatefulWidget {
 }
 
 class ScreenShotIntent extends Intent {}
+
+PositionState progress = PositionState();
 
 class _VideoPlayerState extends State<VideoPlayer> {
   @override
@@ -41,6 +43,19 @@ class _VideoPlayerState extends State<VideoPlayer> {
         children: [
           FloatingActionButton(
             onPressed: () {
+              rewindVideo(progress, widget.player);
+            },
+            backgroundColor: Colors.white,
+            child: Icon(
+              Icons.fast_rewind,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(
+            width: 12,
+          ),
+          FloatingActionButton(
+            onPressed: () {
               context.read<PausePlay>().playPauseVideo();
               widget.player.playOrPause();
             },
@@ -48,7 +63,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
             child: Icon(
               context.watch<PausePlay>().isPlaying
                   ? Icons.pause
-                  : Icons.play_arrow,color: Colors.black,
+                  : Icons.play_arrow,
+              color: Colors.black,
             ),
           ),
           SizedBox(
@@ -61,7 +77,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
             },
             backgroundColor: Colors.white,
             child: const Icon(
-              Icons.camera_alt_outlined,color: Colors.black,
+              Icons.camera_alt_outlined,
+              color: Colors.black,
             ),
           ),
         ],
@@ -217,4 +234,10 @@ captureScreen(context, Player player, int index) async {
       file, player.videoDimensions.width, player.videoDimensions.height);
   Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => CaputuredImageScreen(player, file)));
+  // Navigator.of(context).push(
+  //     MaterialPageRoute(builder: (_) => HomeScreen(file)));
+}
+
+rewindVideo(PositionState progress, Player player) {
+  player.seek((progress.position)! - Duration(seconds: 15));
 }
