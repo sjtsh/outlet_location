@@ -21,11 +21,20 @@ class VideoPlayer extends StatefulWidget {
   _VideoPlayerState createState() => _VideoPlayerState();
 }
 
-class ScreenShotIntent extends Intent {}
+class ScreenShotIntent extends Intent {
+  final Function capture;
+  ScreenShotIntent(this.capture);
+
+  void change() {
+    capture();
+  }
+}
 
 PositionState progress = PositionState();
 
 class _VideoPlayerState extends State<VideoPlayer> {
+  int _counter = 0;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -33,75 +42,82 @@ class _VideoPlayerState extends State<VideoPlayer> {
     widget.player.play();
   }
 
+  capture() {
+
+    captureScreen(context, widget.player, _counter);
+    _counter++;
+  }
+
   @override
   Widget build(BuildContext context) {
-    int _counter = 0;
-    return Scaffold(
-      backgroundColor: const Color(0xfff4f4f4),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              rewindVideo(progress, widget.player);
-            },
-            backgroundColor: Colors.white,
-            child: Icon(
-              Icons.fast_rewind,
-              color: Colors.black,
-            ),
+    return Shortcuts(
+      shortcuts: {
+        LogicalKeySet(LogicalKeyboardKey.space): ScreenShotIntent(capture),
+        LogicalKeySet(LogicalKeyboardKey.arrowUp): ScreenShotIntent(capture),
+        LogicalKeySet(LogicalKeyboardKey.enter): ScreenShotIntent(capture),
+        LogicalKeySet(LogicalKeyboardKey.arrowRight): ScreenShotIntent(capture),
+        LogicalKeySet(LogicalKeyboardKey.arrowLeft): ScreenShotIntent(capture),
+      },
+      child: Actions(
+        actions: {
+          ScreenShotIntent: CallbackAction(
+            onInvoke: (intent) {
+              ScreenShotIntent(capture).change();
+            }
           ),
-          SizedBox(
-            width: 12,
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              context.read<PausePlay>().playPauseVideo();
-              widget.player.playOrPause();
-            },
-            backgroundColor: Colors.white,
-            child: Icon(
-              context.watch<PausePlay>().isPlaying
-                  ? Icons.pause
-                  : Icons.play_arrow,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(
-            width: 12,
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              captureScreen(context, widget.player, _counter);
-              _counter++;
-            },
-            backgroundColor: Colors.white,
-            child: const Icon(
-              Icons.camera_alt_outlined,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-      body: Center(
-        child: Shortcuts(
-          shortcuts: {
-            LogicalKeySet(LogicalKeyboardKey.space): ScreenShotIntent(),
-          },
-          child: Actions(
-            actions: {
-              ScreenShotIntent: CallbackAction<ScreenShotIntent>(
-                onInvoke: (intent) {
+        },
+        child: Scaffold(
+          backgroundColor: const Color(0xfff4f4f4),
+          floatingActionButton: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FloatingActionButton(
+                onPressed: () {
+                  rewindVideo(progress, widget.player);
+                },
+                backgroundColor: Colors.white,
+                child: Icon(
+                  Icons.fast_rewind,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(
+                width: 12,
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  context.read<PausePlay>().playPauseVideo();
+                  widget.player.playOrPause();
+                },
+                backgroundColor: Colors.white,
+                child: Icon(
+                  context.watch<PausePlay>().isPlaying
+                      ? Icons.pause
+                      : Icons.play_arrow,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(
+                width: 12,
+              ),
+              FloatingActionButton(
+                onPressed: () {
                   captureScreen(context, widget.player, _counter);
                   _counter++;
-
-                  print("ss taken");
                 },
-              )
-            },
+                backgroundColor: Colors.white,
+                child: const Icon(
+                  Icons.camera_alt_outlined,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          body: Center(
             child: Stack(
               children: [
                 GestureDetector(
+
                   onTap: () {
                     context.read<PausePlay>().playPauseVideo();
                     widget.player.playOrPause();
@@ -112,6 +128,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                         player: widget.player,
                         scale: 1.0,
                         // default
+
                         showControls: false,
                       ),
                       Positioned(
@@ -148,75 +165,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                     ],
                   ),
                 ),
-                // Container(
-                //   height: 80,
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(12.0),
-                //     child: Row(
-                //       children: [
-                //         Expanded(child: Container()),
-                //         GestureDetector(
-                //           onTap: () {
-                //             context.read<PausePlay>().playPauseVideo();
-                //             widget.player.playOrPause();
-                //           },
-                //           child: Container(
-                //             height: 50,
-                //             width: 50,
-                //             decoration: BoxDecoration(
-                //                 color: Colors.white,
-                //                 shape: BoxShape.circle,
-                //                 boxShadow: [
-                //                   BoxShadow(
-                //                       offset: Offset(0, 2),
-                //                       blurRadius: 2,
-                //                       spreadRadius: 2,
-                //                       color: Colors.black.withOpacity(0.1))
-                //                 ]),
-                //             child: Padding(
-                //               padding: EdgeInsets.all(4.0),
-                //               child: Icon(
-                //                 context.watch<PausePlay>().isPlaying
-                //                     ? Icons.pause
-                //                     : Icons.play_arrow,
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //         const SizedBox(
-                //           width: 12,
-                //         ),
-                //         GestureDetector(
-                //           onTap: () {
-                //             captureScreen(context, widget.player, _counter);
-                //             _counter++;
-                //           },
-                //           child: Container(
-                //             height: 50,
-                //             width: 50,
-                //             decoration: BoxDecoration(
-                //                 color: Colors.white,
-                //                 borderRadius: BorderRadius.circular(20),
-                //                 boxShadow: [
-                //                   BoxShadow(
-                //                       offset: Offset(0, 2),
-                //                       blurRadius: 2,
-                //                       spreadRadius: 2,
-                //                       color: Colors.black.withOpacity(0.1))
-                //                 ]),
-                //             child: const Padding(
-                //               padding: EdgeInsets.all(8.0),
-                //               child: Icon(
-                //                 Icons.camera_alt_outlined,
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //         Expanded(child: Container()),
-                //       ],
-                //     ),
-                //   ),
-                // ),
+
               ],
             ),
           ),
@@ -227,15 +176,13 @@ class _VideoPlayerState extends State<VideoPlayer> {
 }
 
 captureScreen(context, Player player, int index) async {
-  File file = File("C:\\Users\\Dell\\Desktop\\Moviess\\$index.jpeg");
-
-  player.pause();
+  File file = File("C:\\Users\\ACER\\Desktop\\hello\\$index.jpeg");
   player.takeSnapshot(
       file, player.videoDimensions.width, player.videoDimensions.height);
+
+  player.pause();
   Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => CaputuredImageScreen(player, file)));
-  // Navigator.of(context).push(
-  //     MaterialPageRoute(builder: (_) => HomeScreen(file)));
 }
 
 rewindVideo(PositionState progress, Player player) {

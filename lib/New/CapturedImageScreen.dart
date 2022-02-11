@@ -108,7 +108,7 @@ class _CaputuredImageScreenState extends State<CaputuredImageScreen> {
                           if (_formKey.currentState!.validate()) {
                             String oultets = outletsNumberController.text;
 
-                            Navigator.of(context).push(MaterialPageRoute(builder: (_)=>HomeScreen(widget.file, oultets) ));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (_)=>HomeScreen(widget.file, oultets, widget.player) ));
                           }
                         },
                         child: const Text("Next"),

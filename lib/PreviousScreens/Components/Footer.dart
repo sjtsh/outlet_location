@@ -1,7 +1,6 @@
-
-
 import 'dart:io';
 
+import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:outlet_location/PreviousScreens/CatagorizationScreen/FileToCategory.dart';
@@ -22,9 +21,9 @@ class Footer extends StatefulWidget {
   final Function changeClusturIndicatorBack;
   final ScreenshotController screenshotController;
   final int outletsNumberInImage;
+  final Player player;
 
-
- // final LogStorage logStorage = LogStorage(accessibleFilePath!);
+  // final LogStorage logStorage = LogStorage(accessibleFilePath!);
 
   Footer(
       this.isChangeButtonDisabled,
@@ -34,11 +33,15 @@ class Footer extends StatefulWidget {
       this.files,
       this.changeClusturIndicator,
       this.changeClusturIndicatorBack,
-      this.screenshotController, this.outletsNumberInImage);
+      this.screenshotController,
+      this.outletsNumberInImage,
+      this.player);
 
   @override
   _FooterState createState() => _FooterState();
 }
+
+
 
 class _FooterState extends State<Footer> {
   @override
@@ -58,7 +61,9 @@ class _FooterState extends State<Footer> {
                 child: MaterialButton(
                   onPressed: () {
                     if (!widget.isBackButtonDisabled) {
-                      deleteLastFile(widget.files,);
+                      deleteLastFile(
+                        widget.files,
+                      );
                       LogStorage logStorage = LogStorage(accessibleFilePath!);
                       logStorage.addLog("WENT BACK");
                       changeOutSelected("");
@@ -91,24 +96,27 @@ class _FooterState extends State<Footer> {
                 child: MaterialButton(
                   onPressed: () {
                     if (!widget.isNextButtonDisabled) {
+                      currentOuletCount++;
 
-                      if (currentIndex == 1  &&
-                          currentClusterCount == widget.outletsNumberInImage  ) {
-                        fileToCategory(widget.files,
-                            widget.screenshotController);
+                      if (widget.outletsNumberInImage == currentOuletCount) {
+                        fileToCategory(
+                            widget.files, widget.screenshotController);
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
-                              "Congratulations!! directory has been completed",
+                              "Congratulations!! image has been completed",
                             ),
                           ),
                         );
-                       LogStorage logStorage = LogStorage(accessibleFilePath!);
+                        LogStorage logStorage = LogStorage(accessibleFilePath!);
                         logStorage.addLog("COMPLETED");
-                        print("Navigate to video player");
+                        currentOuletCount =0;
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        widget.player.play();
                       } else {
-                        fileToCategory(widget.files,
-                            widget.screenshotController);
+                        fileToCategory(
+                            widget.files, widget.screenshotController);
                         widget.changeClusturIndicator();
                         changeOutSelected("");
                       }
@@ -119,7 +127,7 @@ class _FooterState extends State<Footer> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Next  ",
+                        "Next $currentOuletCount ",
                         style: TextStyle(color: Colors.white),
                       ),
                       Icon(

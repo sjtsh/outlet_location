@@ -10,7 +10,7 @@ import 'package:screenshot/screenshot.dart';
 
 import '../../Database.dart';
 
-class SliderCategory extends StatelessWidget {
+class SliderCategory extends StatefulWidget {
   static final riKey1 = const Key('__RIKEY1__');
   final Function _changeIndicator;
   final File files;
@@ -21,38 +21,72 @@ class SliderCategory extends StatelessWidget {
       this.clusturIndex, this.screenshotController);
 
   @override
+  State<SliderCategory> createState() => _SliderCategoryState();
+}
+
+class _SliderCategoryState extends State<SliderCategory> {
+  @override
   Widget build(BuildContext context) {
+    GlobalKey _paintKey = new GlobalKey();
+    Offset offsets = Offset(0,0);
 
 
-    File sliderPersonalFiles = files;
+    File sliderPersonalFiles = widget.files;
 
     return Expanded(
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Screenshot(
-            controller: screenshotController,
+            controller: widget.screenshotController,
 
-            child: FlutterSimpleStickerView(
-              Image.file(
-                File(
-                  sliderPersonalFiles.path,
+            child: MouseRegion(
+              onEnter:(event) {
+                print("changed mouse cursor");
+              } ,
+              cursor:SystemMouseCursors.click ,
+
+
+              child: Listener(
+                onPointerDown: (event) {
+                  print("Mouse clicked");
+                  // RenderBox referenceBox = _paintKey.currentContext?.findRenderObject() as RenderBox;
+                  // Offset offset = referenceBox.globalToLocal(event.position);
+                double y = event.position.dy;
+                 double x= event.position.dx;
+                  Offset offset = Offset(x, y);
+
+                  setState(() {
+                    offsets = offset;
+                    print(offsets);
+                  });
+
+                },
+                child: CustomPaint(
+                  key: _paintKey,
+                  painter:MyCustomPainter(offsets) ,
+                  child:
+                    Image.file(
+                      File(
+                        sliderPersonalFiles.path,
+                      ),
+                      fit: BoxFit.contain,
+                    ),
+                    // [
+                    //   Image.asset("icons/black.png"),
+                    //   Image.asset("icons/blue.png"),
+                    //   Image.asset("icons/green.png"),
+                    //   Image.asset("icons/red.png"),
+                    // ],
+                    // stickerSize: 100,
+                    // panelHeight: 70,
+                    // panelBackgroundColor: Colors.transparent,
+                    // panelStickerAspectRatio: 4,
+                    // panelStickerBackgroundColor: Colors.transparent,
+                  ),
                 ),
-                fit: BoxFit.contain,
               ),
-              [
-                Image.asset("icons/black.png"),
-                Image.asset("icons/blue.png"),
-                Image.asset("icons/green.png"),
-                Image.asset("icons/red.png"),
-              ],
-              stickerSize: 100,
-              panelHeight: 70,
-              panelBackgroundColor: Colors.transparent,
-              panelStickerAspectRatio: 4,
-              panelStickerBackgroundColor: Colors.transparent,
             ),
-          ),
           Positioned(
             bottom: 0,
             child: Row(
@@ -66,7 +100,7 @@ class SliderCategory extends StatelessWidget {
                           width: 10,
                           decoration: BoxDecoration(
                             color:
-                                clusturIndex == e ? Colors.blue : Colors.black.withOpacity(0.5),
+                                widget.clusturIndex == e ? Colors.blue : Colors.black.withOpacity(0.5),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -83,4 +117,17 @@ class SliderCategory extends StatelessWidget {
       ),
     );
   }
+}
+class MyCustomPainter extends CustomPainter {
+  final Offset _offset;
+  MyCustomPainter(this._offset);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (_offset == null) return;
+    canvas.drawCircle(_offset, 10.0, new Paint()..color = Colors.blue);
+  }
+
+  @override
+  bool shouldRepaint(MyCustomPainter other) => other._offset != _offset;
 }

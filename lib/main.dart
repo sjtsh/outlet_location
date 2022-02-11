@@ -31,11 +31,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // Player player = Player(id: 1);
-    // player.open(
-    //   Media.file(File(r"C:\Users\Dell\Desktop\Moviess\NeverthelessE06.MP4")),
-    // );
-    //VideoPlayer(MediaJson(media: r"C:\Users\Dell\Desktop\Moviess\22d_1625761945.22.9_265142.MP4", json: r"C:\Users\Dell\Desktop\Moviess\22d_1625761945.22.9_265142.json"), player)
+    Player player = Player(id: 1);
+    player.open(
+      Media.file(File(r"C:\Users\ACER\Desktop\test\L\04_20_2021 11_16_46\04_20_2021 11_16_46.MP4")),
+    );
+   // VideoPlayer(MediaJson(media:r"C:\Users\ACER\Desktop\test\L\04_20_2021 11_16_46\04_20_2021 11_16_46.MP4", json: "C:\Users\ACER\Desktop\test\L\04_20_2021 11_16_46\04_20_2021 11_16_46.json"), player);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
 
@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         // home:ChooseFolder(),
-        home: ChooseFile(),
-      // home: VideoPlayer(MediaJson(media: r"C:\Users\Dell\Desktop\Moviess\NeverthelessE06.MP4", json: r"C:\Users\Dell\Desktop\Moviess\NeverthelessE06.json"), player),
+       // home: ChooseFile(),
+       home:   VideoPlayer(MediaJson(media:r"C:\Users\ACER\Desktop\test\L\04_20_2021 11_16_46\04_20_2021 11_16_46.MP4", json: "C:\Users\ACER\Desktop\test\L\04_20_2021 11_16_46\04_20_2021 11_16_46.json"), player)
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 
+import 'package:dart_vlc/dart_vlc.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -20,8 +21,9 @@ import '../../Database.dart';
 class HomeScreen extends StatefulWidget {
   final File files;
   final String outletsNumberInImage;
+  final Player player;
 
-  HomeScreen(this.files, this.outletsNumberInImage);
+  HomeScreen(this.files, this.outletsNumberInImage, this.player);
 
   //this will be the index that will be changed along with the slider and changes the index in the header
   @override
@@ -129,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       height: 50,
                       child: Text(
-                        "Category ${currentClusterCount + 1} of ${outletsNumberInImage}",
+                        "Category ${currentOuletCount + 1} of ${outletsNumberInImage}",
 
                         style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
                       ),
@@ -145,7 +147,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         changeClusturIndicator,
                         changeClusturIndicatorBack,
                         screenshotController,
-                        outletsNumberInImage
+                        outletsNumberInImage,
+                      widget.player
                     ),
                   ],
                 ),
